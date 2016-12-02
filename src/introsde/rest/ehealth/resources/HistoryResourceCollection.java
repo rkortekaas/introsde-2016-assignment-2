@@ -30,7 +30,7 @@ public class HistoryResourceCollection {
     UriInfo uriInfo;
     @Context
     Request request;
-    int id;
+    int id; // refers to personId
     String type;
     String before;
     String after;
