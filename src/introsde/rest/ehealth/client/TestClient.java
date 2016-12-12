@@ -161,7 +161,7 @@ public class TestClient{
 
 	private static URI getBaseURI(){ 
 		//return UriBuilder.fromUri("http://192.168.43.143:5700/assignment").build();
-		return UriBuilder.fromUri("https://introsde2016-assignment-2.herokuapp.com/sdelab").build();
+		return UriBuilder.fromUri("http://localhost:5900/sdelab/").build();
 	}
 	
 	
