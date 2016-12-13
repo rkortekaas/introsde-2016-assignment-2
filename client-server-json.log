@@ -1,0 +1,264 @@
+Request #1: GET /person Accept: application/json
+=> Result: OK
+=> HTTP Status: 200
+[ {
+  "lastname" : "Kortekaas",
+  "name" : "Harrie",
+  "birthdate" : "07/08/1993",
+  "email" : "rackortekaas@gmail.com",
+  "username" : "rkortekaas",
+  "idPerson" : 1,
+  "measureType" : [ {
+    "value" : "72",
+    "measureDef" : {
+      "idMeasureDef" : 1,
+      "measureName" : "weight"
+    },
+    "measureName" : "weight"
+  }, {
+    "value" : "72",
+    "measureDef" : {
+      "idMeasureDef" : 2,
+      "measureName" : "height"
+    },
+    "measureName" : "height"
+  } ]
+}, {
+  "lastname" : "Kortekaas",
+  "name" : "Michelle",
+  "birthdate" : "02/09/1978",
+  "email" : "michelle.kortekaas@live.nl",
+  "username" : "mkortekaas",
+  "idPerson" : 2,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Kortekaas",
+  "name" : "Thomas",
+  "birthdate" : "10/12/1993",
+  "email" : "thomaskortekaas@hotmail.com",
+  "username" : "tkortekaas",
+  "idPerson" : 3,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Rambo",
+  "name" : "John",
+  "birthdate" : "01/01/2016",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4104,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Rambo",
+  "name" : "John",
+  "birthdate" : "01/01/2016",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4105,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Rambo",
+  "name" : "John",
+  "birthdate" : "01/01/2016",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4106,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Rambo",
+  "name" : "John",
+  "birthdate" : "01/01/2016",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4107,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Rambo",
+  "name" : "John",
+  "birthdate" : "01/01/2016",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4108,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Rambo",
+  "name" : "John",
+  "birthdate" : "01/01/2016",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4109,
+  "measureType" : [ ]
+}, {
+  "lastname" : null,
+  "name" : null,
+  "birthdate" : null,
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4110,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Rambo",
+  "name" : "John",
+  "birthdate" : "01/01/2016",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4111,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Rambo",
+  "name" : "John",
+  "birthdate" : "01/01/2016",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4112,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Kenkah",
+  "name" : "Testpersoon",
+  "birthdate" : "01/01/2016",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4113,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Kenkah",
+  "name" : "Testpersoon",
+  "birthdate" : "01/01/2016",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4114,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Kenkah",
+  "name" : "Testpersoon",
+  "birthdate" : "01/01/2016",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4115,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Kenkah",
+  "name" : null,
+  "birthdate" : "01/01/2016",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 4116,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Kortekaas",
+  "name" : "Harrie",
+  "birthdate" : "07/08/1993",
+  "email" : "sjenkie@gmail.com",
+  "username" : "rkortekaas",
+  "idPerson" : 4117,
+  "measureType" : [ {
+    "value" : "72",
+    "measureDef" : {
+      "idMeasureDef" : 1,
+      "measureName" : "weight"
+    },
+    "measureName" : "weight"
+  }, {
+    "value" : "72",
+    "measureDef" : {
+      "idMeasureDef" : 2,
+      "measureName" : "height"
+    },
+    "measureName" : "height"
+  } ]
+}, {
+  "lastname" : "Kortekaas",
+  "name" : "Harrie",
+  "birthdate" : "07/08/1993",
+  "email" : "sjenkie@gmail.com",
+  "username" : "rkortekaas",
+  "idPerson" : 111111,
+  "measureType" : [ {
+    "value" : "72",
+    "measureDef" : {
+      "idMeasureDef" : 1,
+      "measureName" : "weight"
+    },
+    "measureName" : "weight"
+  }, {
+    "value" : "72",
+    "measureDef" : {
+      "idMeasureDef" : 2,
+      "measureName" : "height"
+    },
+    "measureName" : "height"
+  } ]
+}, {
+  "lastname" : "Kortekaas",
+  "name" : "Harrie",
+  "birthdate" : "07/08/1993",
+  "email" : "sjenkie@gmail.com",
+  "username" : "rkortekaas",
+  "idPerson" : 111112,
+  "measureType" : [ {
+    "value" : "72",
+    "measureDef" : {
+      "idMeasureDef" : 1,
+      "measureName" : "weight"
+    },
+    "measureName" : "weight"
+  }, {
+    "value" : "72",
+    "measureDef" : {
+      "idMeasureDef" : 2,
+      "measureName" : "height"
+    },
+    "measureName" : "height"
+  } ]
+} ]
+Request #2: GET /person/1 Accept: application/json
+=> Result: OK
+=> HTTP Status: 200
+{
+  "lastname" : "Kortekaas",
+  "name" : "Harrie",
+  "birthdate" : "07/08/1993",
+  "email" : "rackortekaas@gmail.com",
+  "username" : "rkortekaas",
+  "idPerson" : 1,
+  "measureType" : [ {
+    "value" : "72",
+    "measureDef" : {
+      "idMeasureDef" : 1,
+      "measureName" : "weight"
+    },
+    "measureName" : "weight"
+  }, {
+    "value" : "72",
+    "measureDef" : {
+      "idMeasureDef" : 2,
+      "measureName" : "height"
+    },
+    "measureName" : "height"
+  } ]
+}
+Request #3: PUT /person/1 Accept: application/json Content-Type:  application/json
+=> Result: OK
+=> HTTP Status: 200
+{
+  "lastname" : "Kortekaas",
+  "name" : "Harrie",
+  "birthdate" : "07/08/1993",
+  "email" : "rackortekaas@gmail.com",
+  "username" : "rkortekaas",
+  "idPerson" : 1,
+  "measureType" : [ {
+    "value" : "72",
+    "measureDef" : {
+      "idMeasureDef" : 1,
+      "measureName" : "weight"
+    },
+    "measureName" : "weight"
+  }, {
+    "value" : "72",
+    "measureDef" : {
+      "idMeasureDef" : 2,
+      "measureName" : "height"
+    },
+    "measureName" : "height"
+  } ]
+}

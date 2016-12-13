@@ -160,7 +160,7 @@
 	
 	<target name="execute.client" depends="compile">
 		<echo message="Execute test client" />
-		<java classname="introsde.rest.ehealth.client.TestClient" classpath="${build.dir}">
+		<java classname="introsde.rest.ehealth.client.ClientApp" classpath="${build.dir}">
 			<classpath>
 				<fileset dir="${lib.dir}">
 			    	<include name="**/*.jar" />

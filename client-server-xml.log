@@ -25,7 +25,7 @@ Request #1: GET /person Accept: application/xml
         <value>72</value>
       </measureType>
     </healthProfile>
-    <name>Remco</name>
+    <name>Harrie</name>
     <username>rkortekaas</username>
   </person>
   <person>
@@ -45,6 +45,171 @@ Request #1: GET /person Accept: application/xml
     <healthProfile/>
     <name>Thomas</name>
     <username>tkortekaas</username>
+  </person>
+  <person>
+    <birthdate>01/01/2016</birthdate>
+    <idPerson>4104</idPerson>
+    <lastname>Rambo</lastname>
+    <healthProfile/>
+    <name>John</name>
+  </person>
+  <person>
+    <birthdate>01/01/2016</birthdate>
+    <idPerson>4105</idPerson>
+    <lastname>Rambo</lastname>
+    <healthProfile/>
+    <name>John</name>
+  </person>
+  <person>
+    <birthdate>01/01/2016</birthdate>
+    <idPerson>4106</idPerson>
+    <lastname>Rambo</lastname>
+    <healthProfile/>
+    <name>John</name>
+  </person>
+  <person>
+    <birthdate>01/01/2016</birthdate>
+    <idPerson>4107</idPerson>
+    <lastname>Rambo</lastname>
+    <healthProfile/>
+    <name>John</name>
+  </person>
+  <person>
+    <birthdate>01/01/2016</birthdate>
+    <idPerson>4108</idPerson>
+    <lastname>Rambo</lastname>
+    <healthProfile/>
+    <name>John</name>
+  </person>
+  <person>
+    <birthdate>01/01/2016</birthdate>
+    <idPerson>4109</idPerson>
+    <lastname>Rambo</lastname>
+    <healthProfile/>
+    <name>John</name>
+  </person>
+  <person>
+    <idPerson>4110</idPerson>
+    <healthProfile/>
+  </person>
+  <person>
+    <birthdate>01/01/2016</birthdate>
+    <idPerson>4111</idPerson>
+    <lastname>Rambo</lastname>
+    <healthProfile/>
+    <name>John</name>
+  </person>
+  <person>
+    <birthdate>01/01/2016</birthdate>
+    <idPerson>4112</idPerson>
+    <lastname>Rambo</lastname>
+    <healthProfile/>
+    <name>John</name>
+  </person>
+  <person>
+    <birthdate>01/01/2016</birthdate>
+    <idPerson>4113</idPerson>
+    <lastname>Kenkah</lastname>
+    <healthProfile/>
+    <name>Testpersoon</name>
+  </person>
+  <person>
+    <birthdate>01/01/2016</birthdate>
+    <idPerson>4114</idPerson>
+    <lastname>Kenkah</lastname>
+    <healthProfile/>
+    <name>Testpersoon</name>
+  </person>
+  <person>
+    <birthdate>01/01/2016</birthdate>
+    <idPerson>4115</idPerson>
+    <lastname>Kenkah</lastname>
+    <healthProfile/>
+    <name>Testpersoon</name>
+  </person>
+  <person>
+    <birthdate>01/01/2016</birthdate>
+    <idPerson>4116</idPerson>
+    <lastname>Kenkah</lastname>
+    <healthProfile/>
+  </person>
+  <person>
+    <birthdate>07/08/1993</birthdate>
+    <email>sjenkie@gmail.com</email>
+    <idPerson>4117</idPerson>
+    <lastname>Kortekaas</lastname>
+    <healthProfile>
+      <measureType>
+        <measureDef>
+          <idMeasureDef>1</idMeasureDef>
+          <measureName>weight</measureName>
+        </measureDef>
+        <measureName>weight</measureName>
+        <value>72</value>
+      </measureType>
+      <measureType>
+        <measureDef>
+          <idMeasureDef>2</idMeasureDef>
+          <measureName>height</measureName>
+        </measureDef>
+        <measureName>height</measureName>
+        <value>72</value>
+      </measureType>
+    </healthProfile>
+    <name>Harrie</name>
+    <username>rkortekaas</username>
+  </person>
+  <person>
+    <birthdate>07/08/1993</birthdate>
+    <email>sjenkie@gmail.com</email>
+    <idPerson>111111</idPerson>
+    <lastname>Kortekaas</lastname>
+    <healthProfile>
+      <measureType>
+        <measureDef>
+          <idMeasureDef>1</idMeasureDef>
+          <measureName>weight</measureName>
+        </measureDef>
+        <measureName>weight</measureName>
+        <value>72</value>
+      </measureType>
+      <measureType>
+        <measureDef>
+          <idMeasureDef>2</idMeasureDef>
+          <measureName>height</measureName>
+        </measureDef>
+        <measureName>height</measureName>
+        <value>72</value>
+      </measureType>
+    </healthProfile>
+    <name>Harrie</name>
+    <username>rkortekaas</username>
+  </person>
+  <person>
+    <birthdate>07/08/1993</birthdate>
+    <email>sjenkie@gmail.com</email>
+    <idPerson>111112</idPerson>
+    <lastname>Kortekaas</lastname>
+    <healthProfile>
+      <measureType>
+        <measureDef>
+          <idMeasureDef>1</idMeasureDef>
+          <measureName>weight</measureName>
+        </measureDef>
+        <measureName>weight</measureName>
+        <value>72</value>
+      </measureType>
+      <measureType>
+        <measureDef>
+          <idMeasureDef>2</idMeasureDef>
+          <measureName>height</measureName>
+        </measureDef>
+        <measureName>height</measureName>
+        <value>72</value>
+      </measureType>
+    </healthProfile>
+    <name>Harrie</name>
+    <username>rkortekaas</username>
   </person>
 </people>
 
@@ -74,12 +239,12 @@ Request #2: GET /person/1 Accept: application/xml
       <value>72</value>
     </measureType>
   </healthProfile>
-  <name>Remco</name>
+  <name>Harrie</name>
   <username>rkortekaas</username>
 </person>
 
 Request #3: PUT /person/1 Accept: application/xml Content-Type:  application/xml
-=> Result: ERROR
+=> Result: OK
 => HTTP Status: 200
 <?xml version="1.0" encoding="UTF-8"?><person>
   <birthdate>07/08/1993</birthdate>
@@ -104,7 +269,7 @@ Request #3: PUT /person/1 Accept: application/xml Content-Type:  application/xml
       <value>72</value>
     </measureType>
   </healthProfile>
-  <name>Remco</name>
+  <name>Harrie</name>
   <username>rkortekaas</username>
 </person>
 
