@@ -45,8 +45,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-public class ClientApp{
-	
+public class ClientApp2{
 	
 	private static String first_id;
 	private static String last_id;
@@ -71,20 +70,15 @@ public class ClientApp{
 	
 	
 	private static void initialize() throws ParserConfigurationException, FileNotFoundException{
-		// initialize client
 		ClientConfig clientConfig = new ClientConfig();
 		Client client = ClientBuilder.newClient(clientConfig);
 		service = client.target(getBaseURI());
-		System.out.println("ClientApp started at:"+ getBaseURI());
-		
-		// initialize xpath
+		System.out.println("Test started at url:"+ getBaseURI());
 		domFactory = DocumentBuilderFactory.newInstance();
 	    domFactory.setNamespaceAware(true);
 	    builder = domFactory.newDocumentBuilder();
 	    XPathFactory factory = XPathFactory.newInstance();
 	    xpath = factory.newXPath();
-
-	    // initialize output stream
 	    FileOutputStream filexml = new FileOutputStream("client-server-xml.log");
 	    FileOutputStream filejson = new FileOutputStream("client-server-json.log");
         printxml = new PrintStream(filexml);
@@ -98,86 +92,69 @@ public class ClientApp{
 	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException, TransformerException {
 		initialize();
 		
+		// request with accept: APPLICATION_XML
 		request1XML();
 		printResult();
-
-		request1JSON();
-		printResult();
-
 		request2XML(first_id);
 		printResult();
-
-		request2JSON(first_id);
-		printResult();
-
 		request3XML();
 		printResult();
-
-		request3JSON();
-		printResult();		
-
-		// request4XML();
-		// printResult();
-
-		request5XML("4112");
+		String newperson_id = request4XML();
 		printResult();
-
-		String[] xml = request6XML();
+		request5XML(newperson_id);
 		printResult();
-
-		// String[] json = request6JSON();
-		// printResult();
-
-//	    request7XML(xml, first_id);
-//	    String id = first_id;
-//	    if (result == false){
-//	    	request7XML(xml, last_id);
-//	    	id = last_id;
-//	    }
-//	    printResult();
-
-	    // request7JSON(json, first_id);
-	    // id = first_id;
-	    // if (result == false){
-	    // 	request7JSON(json, last_id);
-	    // 	id = last_id;
-	    // }
-	    // printResult();
-
-	    request8XML("1");
+		String[] s = request6XML();
+		printResult();
+	    request7XML(s, first_id);
+	    String id = first_id;
+	    if (result == false){
+	    	request7XML(s, last_id);
+	    	id = last_id;
+	    }
 	    printResult();
-
-	    request8JSON("1");
+	    request8XML(id);
 	    printResult();
-
-	    request8JSON("1");
+	    request9XML(s);
 	    printResult();
-
-	    // request9XML(xml);
-	    // printResult();
-
-	    // request9JSON(json);
-	    // printResult();
-
-//	    request10XML("1");
-//	    printResult();
-//
-//	    request10JSON("1");
-//		printResult();
-	    
-	    request11JSON("1");
+	    request10XML(id);
 	    printResult();
-
-	    request11XML("1");
+	    request11XML(id);
 	    printResult();
-
 	    request12XML();
 	    printResult();
-
+	    
+		// request with accept: APPLICATION_
+		request1JSON();
+		printResult();
+		request2JSON(first_id);
+		printResult();
+		request3JSON();
+		printResult();
+		newperson_id = request4JSON();
+		printResult();
+		request5JSON(newperson_id);
+		printResult();
+		s = request6JSON();
+		printResult();
+		request7JSON(s, first_id);
+	    id = first_id;
+	    if (result == false){
+	    	request7JSON(s, last_id);
+	    	id = last_id;
+	    }
+	    printResult();
+	    request8JSON(id);
+	    printResult();
+	    request9JSON(s);
+	    printResult();
+	    request10JSON(id);
+	    printResult();
+	    request11JSON(id);
+	    printResult();
 	    request12JSON();
 	    printResult();
 	    
-	    System.out.println("Output saved to client-server-xml and client-server-json ");
+	    System.out.println("Files written");
 	    
 
 	}
@@ -191,8 +168,6 @@ public class ClientApp{
 	
 	private static void printResult() throws TransformerException{
 		PrintStream stream = null;
-		
-		// depending on type create new Printstream
 		if(type == MediaType.APPLICATION_XML){
 			stream=printxml;
 		}
@@ -200,9 +175,6 @@ public class ClientApp{
 			stream=printjson;
 		}
 		stream.print(start + request + " Accept: " + type);
-
-
-
 		if (content != null)
 			stream.println(" Content-Type:  " + content);
 		else 
@@ -211,8 +183,6 @@ public class ClientApp{
 			stream.println("=> Result: OK");
 		else 
 			stream.println("=> Result: ERROR");
-
-		// print response
 		if (resp != null){
 			stream.println("=> HTTP Status: " + resp.getStatus());
 			if (type == MediaType.APPLICATION_XML){
@@ -226,6 +196,9 @@ public class ClientApp{
 		}
 		
 	}
+	
+
+	
 	
 	private static String printXML(Document doc) throws TransformerException{
 		Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -267,7 +240,6 @@ public class ClientApp{
 	    
 	    resp = service.path(request).request().accept(type).get();
 	    
-	    // store xml response in doc
 	    xml = resp.readEntity(String.class);
 	    doc = builder.parse(new InputSource(new StringReader(xml)));
 
@@ -277,45 +249,15 @@ public class ClientApp{
 	    
 	    if (nodes.getLength() > 2) result = true;
 	    
-	    // get data first person in list
+	    // first id
 	    expr = xpath.compile("//person[1]/idPerson");
 	    Node node = (Node) expr.evaluate(doc, XPathConstants.NODE);
 	    first_id = node.getTextContent();
 	    
-	    // get data last person in list
+	    // last id
 	    expr = xpath.compile("//person[last()]/idPerson");
 	    node = (Node) expr.evaluate(doc, XPathConstants.NODE);
 	    last_id = node.getTextContent();
-		
-	}
-
-		private static void request1JSON() throws JsonProcessingException, IOException {
-		// GET Request #1 --- GET  BASEURL/person
-	    // Accept: application/json
-	    //variable
-	    start = "Request #1: GET /";
-	    request = "person";
-	    type = MediaType.APPLICATION_JSON;
-	    content = null;
-	    result = false;
-	    
-	    
-	    resp = service.path(request).request().accept(type).get();
-		
-		// Store response in json variable
-	    json = resp.readEntity(String.class);
-
-	    JsonNode nodes = mapper.readTree(json);
-
-	    if (nodes.size() > 2) result = true;
-	    
-	    // first id
-	    first_id = nodes.get(0).path("idPerson").asText();
-	    
-	    // last id
-	    last_id = nodes.get(nodes.size()-1).path("idPerson").asText();
-	    
-	    
 		
 	}
 	
@@ -335,35 +277,14 @@ public class ClientApp{
 	    
 	    xml = resp.readEntity(String.class);
 	    if (!xml.isEmpty())
-	    	// serves as output
 	    	doc = builder.parse(new InputSource(new StringReader(xml)));
-
-	    
-	    if (resp.getStatus() == 200 || resp.getStatus() == 202) result = true;
-	    
-	}
-	
-	private static void request2JSON(String id){	    
-	    // GET Request #2 --- GET  BASEURL/person/first_id
-	    // Accept: application/json
-	    //variable
-	    start = "Request #2: GET /";
-	    request = "person/"+id;
-	    type = MediaType.APPLICATION_JSON;
-	    content = null;
-	    result = false;
-	    
-	    
-	    resp = service.path(request).request().accept(type).get();
-	    
-	    json = resp.readEntity(String.class);
 
 	    
 	    if (resp.getStatus() == 200 || resp.getStatus() == 202) result = true;
 	    
 		
 	}
-
+	
 	private static void request3XML() throws SAXException, IOException, XPathExpressionException, TransformerException{	    
 	    // PUT Request #3 --- PUT  BASEURL/person/first_id
 	    // Accept: application/xml
@@ -374,109 +295,53 @@ public class ClientApp{
 	    content = MediaType.APPLICATION_XML;
 	    result = false;
 	    
-	    String newName = "Harrie";
-	    String requestBody = "<person><name>"+ newName +"</name></person>";
+	    String newName = "Jon";
+	    String requestBody = "<person><firstname>"+ newName +"</firstname></person>";
 	    resp = service.path(request).request().accept(type).put(Entity.entity(requestBody, content));
 	    xml = resp.readEntity(String.class);
 	    doc = builder.parse(new InputSource(new StringReader(xml)));
-   
-	    XPathExpression expr = xpath.compile("//name");
-	    String name = (String) expr.evaluate(doc, XPathConstants.STRING);
-	    if (newName.equals(name)) result = true;
+    
+	    XPathExpression expr = xpath.compile("//firstname");
+	    String firstname = (String) expr.evaluate(doc, XPathConstants.STRING);
+	    if (newName.equals(firstname)) result = true;
 	    
 	}
-
-	private static void request3JSON() throws JsonProcessingException, IOException{	    
-	    // PUT Request #3 --- PUT  BASEURL/person/first_id
-	    // Accept: application/json
+	
+	
+	
+	private static String request4XML() throws SAXException, IOException, XPathExpressionException, TransformerException{	    
+		// POST Request #4 --- POST  BASEURL/person
+	    // Accept: application/xml
 	    //variable
-	    start = "Request #3: PUT /";
-	    request = "person/"+first_id;
-	    type = MediaType.APPLICATION_JSON;
-	    content = MediaType.APPLICATION_JSON;
+	    start = "Request #4: POST /";
+	    request = "person";
+	    type = MediaType.APPLICATION_XML;
+	    content = MediaType.APPLICATION_XML;
 	    result = false;
+	    String newperson_id = "";
 	    
-	    String newName = "Harrie";
-	    String requestBody = "{\"name\": \""+ newName  +"\"}";
+	    String requestBody = "<person>"
+	    		+ "<firstname>Chuck</firstname>"
+	    		+ "<lastname>Norris</lastname>"
+	    		+ "<birthdate>01/01/1945</birthdate>"
+	    		+ "<healthprofile>"
+	    		+ "<measureType><measure>weight</measure><value>78.9</value></measureType>"
+	    		+ "<measureType><measure>height</measure><value>172</value></measureType>"
+	    		+ "</healthprofile></person>";
+
+
+	    resp = service.path(request).request().accept(type).post(Entity.entity(requestBody, content));
+	    xml = resp.readEntity(String.class);
+	    doc = builder.parse(new InputSource(new StringReader(xml)));
 	    
-	    	  
-	    resp = service.path(request).request().accept(type).put(Entity.entity(requestBody, content));
-	    json = resp.readEntity(String.class);
-	    JsonNode node = mapper.readTree(json);
-   
-	    String name = node.path("name").asText();
-	    if (newName.equals(name)) result = true;
+	    XPathExpression expr = xpath.compile("//idPerson");
+	    newperson_id = (String) expr.evaluate(doc, XPathConstants.STRING);
+	    if ((resp.getStatus() == 200 || resp.getStatus() == 201 || resp.getStatus() == 202) && ! newperson_id.isEmpty()) result = true;
+	    return newperson_id;
 	    
 	}
-
-	// private static String request4XML() throws SAXException, IOException, XPathExpressionException, TransformerException{	    
-	// 	// POST Request #4 --- POST  BASEURL/person
-	//     // Accept: application/xml
-	//     //variable
-	//     start = "Request #4: POST /";
-	//     request = "person";
-	//     type = MediaType.APPLICATION_XML;
-	//     content = MediaType.APPLICATION_XML;
-	//     result = false;
-	//     String newperson_id = "";
-	//     String newName = "Raiku";
-	//     String requestBody = "<person><name>"+ newName +"</name></person>";
-	//    //  String requestBody =
-	//    //  		 	"<person>"
-	// 			// +	"<name>Cristhian</name>"
-	// 			// +	"<lastname>Parra</lastname>"
-	// 			// +	"<birthdate>1984-06-21</birthdate>"
- // 			// 	+	"<healthprofile>"
-	// 			// +  	"<weight>72</weight>"
-	// 			// +  	"<height>1.72</height>"
-	// 			// + 	"</healthprofile>"
-	// 			// +	"</person>";
-
-	//     resp = service.path(request).request().accept(type).post(Entity.entity(requestBody, content));
-	//     xml = resp.readEntity(String.class);
-	//     doc = builder.parse(new InputSource(new StringReader(xml)));
-	    
-	//     // XPathExpression expr = xpath.compile("//idPerson");
-	//     // newperson_id = (String) expr.evaluate(doc, XPathConstants.STRING);
-	//     // if ((resp.getStatus() == 200 || resp.getStatus() == 201 || resp.getStatus() == 202) && ! newperson_id.isEmpty()) result = true;
-	//     return newperson_id;
-	    
-	// }
-
-
-
-
-	// private static String request4JSON() throws JsonProcessingException, IOException{	    
-	// 	// POST Request #4 --- POST  BASEURL/person
-	//     // Accept: application/json
-	//     //variable
-	//     start = "Request #4: POST /";
-	//     request = "person";
-	//     type = MediaType.APPLICATION_JSON;
-	//     content = MediaType.APPLICATION_JSON;
-	//     result = false;
-	//     String newperson_id = "";
-	    
-	//     String requestBody = "{"
-	//     		+ "\"name\": \"Jose\","
-	//     		+ "\"lastname\":\"Kortekaas\","
-	//     		+ "\"birthdate\":\"01/01/1945\""
-	//     		// + "\"measureType\":["
-	//     		// + "{\"measure\":\"weight\",\"value\":\"78.9\"},"
-	//     		// + "{\"measure\":\"height\",\"value\":\"172\"}]"
-	//     		+ "}";
-
-	   
-	//     resp = service.path(request).request().accept(type).post(Entity.entity(requestBody, content));
-	//     json = resp.readEntity(String.class);
-	//     JsonNode node = mapper.readTree(json);
-	    
-	//     newperson_id = node.path("idPerson").asText();
-	//     if ((resp.getStatus() == 200 || resp.getStatus() == 201 || resp.getStatus() == 202) && ! newperson_id.isEmpty()) result = true;
-	//     return newperson_id;
-	    
-	// }
-
+	
+	
 	private static void request5XML(String id) throws SAXException, IOException, XPathExpressionException, TransformerException{	    
 		// DELETE Request #5 --- DELETE  BASEURL/person/id
 	    // Accept: application/xml
@@ -501,32 +366,7 @@ public class ClientApp{
 	    if (resp.getStatus()==404) result = true;
 	    resp = this_resp;
 	}
-
-		private static void request5JSON(String id){	    
-		// DELETE Request #5 --- DELETE  BASEURL/person/id
-	    // Accept: application/json
-	    // variable
-	    start = "Request #5: DELETE /";
-	    request = "person/"+id;
-	    type = MediaType.APPLICATION_JSON;
-	    content = null;
-	    doc = null;
-	    
-
-	    Response this_resp = service.path(request).request().accept(type).delete();
-	    request2JSON(id);
-	    
-	    // reset variable
-	    start = "Request #5: DELETE /";
-	    request = "person/"+id;
-	    type = MediaType.APPLICATION_JSON;
-	    content = null;
-	    result = false;
-	    
-	    if (resp.getStatus()==404) result = true;
-	    resp = this_resp;
-	}
-
+	
 	private static String[] request6XML() throws SAXException, IOException, XPathExpressionException, TransformerException{	    
 		// GET Request #6 --- GET  BASEURL/measureTypes
 	    // Accept: application/xml
@@ -548,36 +388,10 @@ public class ClientApp{
 	    
 	    if (nodes.getLength() > 2) result = true;
 	    String[] measureTypes= new String[nodes.getLength()-1];
-	    for (int i = 1; i< nodes.getLength(); i++){
+ 	    for (int i = 1; i< nodes.getLength(); i++){
 	    	measureTypes[i-1]=nodes.item(i).getTextContent();
 	    }
-	    return measureTypes;
-	    
-	}
-
-		private static String[] request6JSON() throws JsonProcessingException, IOException{	    
-		// GET Request #6 --- GET  BASEURL/measureTypes
-	    // Accept: application/json
-	    //variable
-	    start = "Request #6: GET /";
-	    request = "measureTypes";
-	    type = MediaType.APPLICATION_JSON;
-	    content = null;
-	    result = false;
-	    
-	    resp = service.path(request).request().accept(type).get();
-	    
-	    json = resp.readEntity(String.class);
-	    JsonNode node = mapper.readTree(json);
-
-	    int size = node.size();
-	    if (size > 2) result = true;
-	    
-	    String[] measureTypes= new String[size];
-	    for (int i = 0; i< size; i++){
-	    	measureTypes[i]=node.get(i).path("value").asText();
-	    }
-	    return measureTypes;
+ 	    return measureTypes;
 	    
 	}
 	
@@ -629,47 +443,6 @@ public class ClientApp{
 	    doc = this_doc;
 	    
 	}
-
-		private static void request7JSON(String[] vector, String id) throws JsonProcessingException, IOException{	    
-		// GET Request #7 --- GET  BASEURL/person/{id}/{measureType}
-	    // Accept: application/json
-	    //variable
-	    start = "Request #7: GET /";
-	    request = "person/"+ id + "/";
-	    type = MediaType.APPLICATION_JSON;
-	    content = null;
-	    result = false;
-	    Response this_res = null;
-	    String this_req = null;
-	    String this_json = null;
-	    
-	    for (int i = 0; i<vector.length; i++){
-	    	String request1 = request + vector[i];
-	    	
-	    	resp = service.path(request1).request().accept(type).get();
-	    	if(resp.getStatus() == 200){
-	    		result = true;
-	    		json = resp.readEntity(String.class);
-	    		JsonNode node = mapper.readTree(json);
-	    		if (!"[]".equals(json)){
-	    			measure_type = node.get(0).path("measureDefinition").path("value").asText();
-		    		measure_id = node.get(0).path("mid").asText();
-		    		id = first_id;
-		    		this_res = resp;
-		    		this_req = request1;
-		    		this_json = json;
-	    		}	
-	    		
-	    	}
-	    	
-	    }
-	    
-	    resp = this_res;
-	    request = this_req;
-	    json = this_json;
-	    
-	}
-
 	
 	private static void request8XML(String id) throws SAXException, IOException, XPathExpressionException, TransformerException{	    
 	    // GET Request #8 --- GET  BASEURL/person/{id}/{measureType}/{mid}
@@ -687,26 +460,6 @@ public class ClientApp{
 	    xml = resp.readEntity(String.class);
 	    if (!xml.isEmpty()) 
 	    	doc = builder.parse(new InputSource(new StringReader(xml)));
-
-	    
-	    if (resp.getStatus() == 200 || resp.getStatus() == 202) result = true;  
-		
-	}
-
-	private static void request8JSON(String id){	    
-	    // GET Request #8 --- GET  BASEURL/person/{id}/{measureType}/{mid}
-	    // Accept: application/json
-	    //variable
-	    start = "Request #8: GET /";
-	    request = "person/" + id + "/" + measure_type + "/" + measure_id;
-	    type = MediaType.APPLICATION_JSON;
-	    content = null;
-	    result = false;
-	    
-	    resp = service.path(request).request().accept(type).get();
-	    
-	    json = resp.readEntity(String.class);
-	    // JsonNode node = mapper.readTree(json);
 
 	    
 	    if (resp.getStatus() == 200 || resp.getStatus() == 202) result = true;  
@@ -754,8 +507,323 @@ public class ClientApp{
 	    
 		
 	}
+	
+	private static void request10XML(String id) throws SAXException, IOException, XPathExpressionException, TransformerException{	    
+	    // PUT Request #10 --- PUT  BASEURL/person/{id}/{measureType}/{mid}
+	    // Accept: application/xml
+	    //variable 
+	    start = "Request #10: PUT /";
+	    request = "person/"+ id + "/" + measure_type + "/" + measure_id;
+	    type = MediaType.APPLICATION_XML;
+	    content = MediaType.APPLICATION_XML;
+	    result = false;
+	    int value = 82;
+	    
+	    String requestBody = "<healthMeasureHistory><value>"+ value +"</value></healthMeasureHistory>";
+	    Response this_resp = service.path(request).request().accept(type).put(Entity.entity(requestBody, content));
+	    String this_xml = this_resp.readEntity(String.class);
+	    Document this_doc = builder.parse(new InputSource(new StringReader(this_xml)));
+    
+	    request8XML(id);
+	    XPathExpression expr = xpath.compile("//value");
+	    int newvalue = Integer.parseInt((String)expr.evaluate(doc, XPathConstants.STRING));
+	    
+	    // reset variable
+	    start = "Request #10: PUT /";
+	    request = "person/"+ id + "/" + measure_type + "/" + measure_id;
+	    type = MediaType.APPLICATION_XML;
+	    content = MediaType.APPLICATION_XML;
+	    result = false;
+	    resp = this_resp;
+	    xml = this_xml;
+	    doc = this_doc;
+	    
+	    if (value == newvalue) result = true;
+	    
+	}
+	
+	
+	private static void request11XML(String id) throws SAXException, IOException, XPathExpressionException, TransformerException{	    
+	    // GET Request #11 --- GET  BASEURL/person/{id}/{measureType}?before={beforeDate}&after={afterDate}
+	    // Accept: application/xml
+	    //variable 
+		String before = "20-11-2016";
+		String after ="10-11-1990";
+		measure_type = "weight";
+	    start = "Request #11: GET /";
+	    request = "person/"+ id + "/" + measure_type;
+	    type = MediaType.APPLICATION_XML;
+	    content = null; 
+	    result = false;
+	    
+	    resp = service.path(request).queryParam("before", before).queryParam("after", after).request().accept(type).get();
+	    xml = resp.readEntity(String.class);
 
-		private static void request9JSON(String[] vector) throws JsonProcessingException, IOException{	    
+	    if (!xml.isEmpty()){
+	    	doc = builder.parse(new InputSource(new StringReader(xml)));
+	    }
+	    	
+    
+	    XPathExpression expr = xpath.compile("count(//healthMeasureHistory)");
+	    int size = Integer.parseInt((String)expr.evaluate(doc, XPathConstants.STRING));
+
+	    
+	    if (resp.getStatus() == 200 && size>0) result = true;
+	    request = "person/"+ id + "/" + measure_type + "?before=" + before + "&after=" + after;
+	    
+	}
+	
+	
+	private static void request12XML() throws XPathExpressionException, SAXException, IOException {	    
+	    // GET Request #12 --- GET  BASEURL/person/{id}?measureType={measureType}&max={max}&min={min}
+	    // Accept: application/xml
+	    //variable 
+		String max = "95";
+		String min ="85";
+		measure_type ="weight";
+	    start = "Request #12: GET /";
+	    request = "person";
+	    type = MediaType.APPLICATION_XML;
+	    content = null;
+	    result = false;
+	    
+	    resp = service.path(request).queryParam("measureType", measure_type).queryParam("max", max).queryParam("min", min)
+	    		.request().accept(type).get();
+	    xml = resp.readEntity(String.class);
+	    if (!xml.isEmpty())
+	    	doc = builder.parse(new InputSource(new StringReader(xml)));  
+	    
+	    XPathExpression expr = xpath.compile("count(//person)");
+	    int size = Integer.parseInt((String)expr.evaluate(doc, XPathConstants.STRING));
+	    
+	    if (resp.getStatus() == 200 && size>0) result = true;
+	    request = "person?measureType=" + measure_type + "&max=" + max + "&min=" + min;
+	    
+	}
+	
+	
+	
+	private static void request1JSON() throws JsonProcessingException, IOException {
+		// GET Request #1 --- GET  BASEURL/person
+	    // Accept: application/json
+	    //variable
+	    start = "Request #1: GET /";
+	    request = "person";
+	    type = MediaType.APPLICATION_JSON;
+	    content = null;
+	    result = false;
+	    
+	    
+	    resp = service.path(request).request().accept(type).get();
+	    
+	    json = resp.readEntity(String.class);
+	    JsonNode nodes = mapper.readTree(json);
+
+	    
+	    if (nodes.size() > 2) result = true;
+	    
+	    // first id
+	    first_id = nodes.get(0).path("idPerson").asText();
+	    
+	    // last id
+	    last_id = nodes.get(nodes.size()-1).path("idPerson").asText();
+	    
+	    
+		
+	}
+	
+	
+	private static void request2JSON(String id){	    
+	    // GET Request #2 --- GET  BASEURL/person/first_id
+	    // Accept: application/json
+	    //variable
+	    start = "Request #2: GET /";
+	    request = "person/"+id;
+	    type = MediaType.APPLICATION_JSON;
+	    content = null;
+	    result = false;
+	    
+	    
+	    resp = service.path(request).request().accept(type).get();
+	    
+	    json = resp.readEntity(String.class);
+
+	    
+	    if (resp.getStatus() == 200 || resp.getStatus() == 202) result = true;
+	    
+		
+	}
+	
+	private static void request3JSON() throws JsonProcessingException, IOException{	    
+	    // PUT Request #3 --- PUT  BASEURL/person/first_id
+	    // Accept: application/json
+	    //variable
+	    start = "Request #3: PUT /";
+	    request = "person/"+first_id;
+	    type = MediaType.APPLICATION_JSON;
+	    content = MediaType.APPLICATION_JSON;
+	    result = false;
+	    
+	    String newName = "Jon";
+	    String requestBody = "{\"firstname\": \""+ newName  +"\"}";
+	    
+	    	  
+	    resp = service.path(request).request().accept(type).put(Entity.entity(requestBody, content));
+	    json = resp.readEntity(String.class);
+	    JsonNode node = mapper.readTree(json);
+    
+	    String firstname = node.path("firstname").asText();
+	    if (newName.equals(firstname)) result = true;
+	    
+	}
+	
+	
+	
+	private static String request4JSON() throws JsonProcessingException, IOException{	    
+		// POST Request #4 --- POST  BASEURL/person
+	    // Accept: application/json
+	    //variable
+	    start = "Request #4: POST /";
+	    request = "person";
+	    type = MediaType.APPLICATION_JSON;
+	    content = MediaType.APPLICATION_JSON;
+	    result = false;
+	    String newperson_id = "";
+	    
+	    String requestBody = "{"
+	    		+ "\"firstname\": \"Chuck\","
+	    		+ "\"lastname\":\"Norris\","
+	    		+ "\"birthdate\":\"01/01/1945\","
+	    		+ "\"measureType\":["
+	    		+ "{\"measure\":\"weight\",\"value\":\"78.9\"},"
+	    		+ "{\"measure\":\"height\",\"value\":\"172\"}]"
+	    		+ "}";
+
+	   
+	    resp = service.path(request).request().accept(type).post(Entity.entity(requestBody, content));
+	    json = resp.readEntity(String.class);
+	    JsonNode node = mapper.readTree(json);
+	    
+	    newperson_id = node.path("idPerson").asText();
+	    if ((resp.getStatus() == 200 || resp.getStatus() == 201 || resp.getStatus() == 202) && ! newperson_id.isEmpty()) result = true;
+	    return newperson_id;
+	    
+	}
+	
+	
+	private static void request5JSON(String id){	    
+		// DELETE Request #5 --- DELETE  BASEURL/person/id
+	    // Accept: application/json
+	    // variable
+	    start = "Request #5: DELETE /";
+	    request = "person/"+id;
+	    type = MediaType.APPLICATION_JSON;
+	    content = null;
+	    doc = null;
+	    
+
+	    Response this_resp = service.path(request).request().accept(type).delete();
+	    request2JSON(id);
+	    
+	    // reset variable
+	    start = "Request #5: DELETE /";
+	    request = "person/"+id;
+	    type = MediaType.APPLICATION_JSON;
+	    content = null;
+	    result = false;
+	    
+	    if (resp.getStatus()==404) result = true;
+	    resp = this_resp;
+	}
+	
+	private static String[] request6JSON() throws JsonProcessingException, IOException{	    
+		// GET Request #6 --- GET  BASEURL/measureTypes
+	    // Accept: application/json
+	    //variable
+	    start = "Request #6: GET /";
+	    request = "measureTypes";
+	    type = MediaType.APPLICATION_JSON;
+	    content = null;
+	    result = false;
+	    
+	    resp = service.path(request).request().accept(type).get();
+	    
+	    json = resp.readEntity(String.class);
+	    JsonNode node = mapper.readTree(json);
+
+	    int size = node.size();
+	    if (size > 2) result = true;
+	    
+	    String[] measureTypes= new String[size];
+ 	    for (int i = 0; i< size; i++){
+	    	measureTypes[i]=node.get(i).path("value").asText();
+	    }
+ 	    return measureTypes;
+	    
+	}
+	
+	private static void request7JSON(String[] vector, String id) throws JsonProcessingException, IOException{	    
+		// GET Request #7 --- GET  BASEURL/person/{id}/{measureType}
+	    // Accept: application/json
+	    //variable
+	    start = "Request #7: GET /";
+	    request = "person/"+ id + "/";
+	    type = MediaType.APPLICATION_JSON;
+	    content = null;
+	    result = false;
+	    Response this_res = null;
+	    String this_req = null;
+	    String this_json = null;
+	    
+	    for (int i = 0; i<vector.length; i++){
+	    	String request1 = request + vector[i];
+	    	
+	    	resp = service.path(request1).request().accept(type).get();
+	    	if(resp.getStatus() == 200){
+	    		result = true;
+	    		json = resp.readEntity(String.class);
+	    		JsonNode node = mapper.readTree(json);
+	    		if (!"[]".equals(json)){
+	    			measure_type = node.get(0).path("measureDefinition").path("value").asText();
+		    		measure_id = node.get(0).path("mid").asText();
+		    		id = first_id;
+		    		this_res = resp;
+		    		this_req = request1;
+		    		this_json = json;
+	    		}	
+	    		
+	    	}
+	    	
+	    }
+	    
+	    resp = this_res;
+	    request = this_req;
+	    json = this_json;
+	    
+	}
+	
+	private static void request8JSON(String id){	    
+	    // GET Request #8 --- GET  BASEURL/person/{id}/{measureType}/{mid}
+	    // Accept: application/json
+	    //variable
+	    start = "Request #8: GET /";
+	    request = "person/" + id + "/" + measure_type + "/" + measure_id;
+	    type = MediaType.APPLICATION_JSON;
+	    content = null;
+	    result = false;
+	    
+	    resp = service.path(request).request().accept(type).get();
+	    
+	    json = resp.readEntity(String.class);
+	    // JsonNode node = mapper.readTree(json);
+
+	    
+	    if (resp.getStatus() == 200 || resp.getStatus() == 202) result = true;  
+		
+	}
+	
+	
+	private static void request9JSON(String[] vector) throws JsonProcessingException, IOException{	    
 	    // POST Request #9 --- POST  BASEURL/person/{first_person_id}/{measureType}
 	    // Accept: application/json
 	    
@@ -794,41 +862,8 @@ public class ClientApp{
 		
 	}
 	
-	private static void request10XML(String id) throws SAXException, IOException, XPathExpressionException, TransformerException{	    
-	    // PUT Request #10 --- PUT  BASEURL/person/{id}/{measureType}/{mid}
-	    // Accept: application/xml
-	    //variable 
-	    start = "Request #10: PUT /";
-	    request = "person/"+ id + "/" + measure_type + "/" + measure_id;
-	    type = MediaType.APPLICATION_XML;
-	    content = MediaType.APPLICATION_XML;
-	    result = false;
-	    int value = 82;
-	    
-	    String requestBody = "<healthMeasureHistory><value>"+ value +"</value></healthMeasureHistory>";
-	    Response this_resp = service.path(request).request().accept(type).put(Entity.entity(requestBody, content));
-	    String this_xml = this_resp.readEntity(String.class);
-	    Document this_doc = builder.parse(new InputSource(new StringReader(this_xml)));
-   
-	    request8XML(id);
-	    XPathExpression expr = xpath.compile("//value");
-	    int newvalue = Integer.parseInt((String)expr.evaluate(doc, XPathConstants.STRING));
-	    
-	    // reset variable
-	    start = "Request #10: PUT /";
-	    request = "person/"+ id + "/" + measure_type + "/" + measure_id;
-	    type = MediaType.APPLICATION_XML;
-	    content = MediaType.APPLICATION_XML;
-	    result = false;
-	    resp = this_resp;
-	    xml = this_xml;
-	    doc = this_doc;
-	    
-	    if (value == newvalue) result = true;
-	    
-	}
-
-		private static void request10JSON(String id) throws JsonProcessingException, IOException{	    
+	
+	private static void request10JSON(String id) throws JsonProcessingException, IOException{	    
 	    // PUT Request #10 --- PUT  BASEURL/person/{id}/{measureType}/{mid}
 	    // Accept: application/json
 	    //variable 
@@ -842,7 +877,7 @@ public class ClientApp{
 	    String requestBody = "{\"value\":"+ value +"}";
 	    Response this_resp = service.path(request).request().accept(type).put(Entity.entity(requestBody, content));
 	    String this_json = this_resp.readEntity(String.class);
-   
+    
 	    request8JSON(id);
 	    JsonNode node = mapper.readTree(json);
 	    int newvalue = 0;
@@ -863,37 +898,7 @@ public class ClientApp{
 	}
 	
 	
-	private static void request11XML(String id) throws SAXException, IOException, XPathExpressionException, TransformerException{	    
-	    // GET Request #11 --- GET  BASEURL/person/{id}/{measureType}?before={beforeDate}&after={afterDate}
-	    // Accept: application/xml
-	    //variable 
-		String before = "20-11-2016";
-		String after ="10-11-1990";
-		measure_type = "weight";
-	    start = "Request #11: GET /";
-	    request = "person/"+ id + "/" + measure_type;
-	    type = MediaType.APPLICATION_XML;
-	    content = null; 
-	    result = false;
-	    
-	    resp = service.path(request).queryParam("before", before).queryParam("after", after).request().accept(type).get();
-	    xml = resp.readEntity(String.class);
-
-	    if (!xml.isEmpty()){
-	    	doc = builder.parse(new InputSource(new StringReader(xml)));
-	    }
-	    	
-   
-	    XPathExpression expr = xpath.compile("count(//healthMeasureHistory)");
-	    int size = Integer.parseInt((String)expr.evaluate(doc, XPathConstants.STRING));
-
-	    
-	    if (resp.getStatus() == 200 && size>0) result = true;
-	    request = "person/"+ id + "/" + measure_type + "?before=" + before + "&after=" + after;
-	    
-	}
-	
-		private static void request11JSON(String id) throws JsonProcessingException, IOException {	    
+	private static void request11JSON(String id) throws JsonProcessingException, IOException {	    
 	    // GET Request #11 --- GET  BASEURL/person/{id}/{measureType}?before={beforeDate}&after={afterDate}
 	    // Accept: application/json
 	    //variable 
@@ -922,32 +927,6 @@ public class ClientApp{
 	    
 	}
 	
-	private static void request12XML() throws XPathExpressionException, SAXException, IOException {	    
-	    // GET Request #12 --- GET  BASEURL/person/{id}?measureType={measureType}&max={max}&min={min}
-	    // Accept: application/xml
-	    //variable 
-		String max = "95";
-		String min ="85";
-		measure_type ="weight";
-	    start = "Request #12: GET /";
-	    request = "person";
-	    type = MediaType.APPLICATION_XML;
-	    content = null;
-	    result = false;
-	    
-	    resp = service.path(request).queryParam("measureType", measure_type).queryParam("max", max).queryParam("min", min)
-	    		.request().accept(type).get();
-	    xml = resp.readEntity(String.class);
-	    if (!xml.isEmpty())
-	    	doc = builder.parse(new InputSource(new StringReader(xml)));  
-	    
-	    XPathExpression expr = xpath.compile("count(//person)");
-	    int size = Integer.parseInt((String)expr.evaluate(doc, XPathConstants.STRING));
-	    
-	    if (resp.getStatus() == 200 && size>0) result = true;
-	    request = "person?measureType=" + measure_type + "&max=" + max + "&min=" + min;
-	    
-	}
 	
 	private static void request12JSON() throws JsonProcessingException, IOException {	    
 	    // GET Request #12 --- GET  BASEURL/person/{id}?measureType={measureType}&max={max}&min={min}
@@ -977,5 +956,9 @@ public class ClientApp{
 	    request = "person?measureType=" + measure_type + "&max=" + max + "&min=" + min;
 	    
 	}
+	
+	
+	
+	
 
 }

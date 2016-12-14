@@ -101,13 +101,6 @@ Request #1: GET /person Accept: application/xml
   </person>
   <person>
     <birthdate>01/01/2016</birthdate>
-    <idPerson>4112</idPerson>
-    <lastname>Rambo</lastname>
-    <healthProfile/>
-    <name>John</name>
-  </person>
-  <person>
-    <birthdate>01/01/2016</birthdate>
     <idPerson>4113</idPerson>
     <lastname>Kenkah</lastname>
     <healthProfile/>
@@ -211,6 +204,51 @@ Request #1: GET /person Accept: application/xml
     <name>Harrie</name>
     <username>rkortekaas</username>
   </person>
+  <person>
+    <birthdate>01/01/1945</birthdate>
+    <idPerson>111113</idPerson>
+    <lastname>Kortekaas</lastname>
+    <healthProfile/>
+    <name>Jose</name>
+  </person>
+  <person>
+    <birthdate>01/01/1945</birthdate>
+    <idPerson>111114</idPerson>
+    <lastname>Kortekaas</lastname>
+    <healthProfile/>
+    <name>Jose</name>
+  </person>
+  <person>
+    <birthdate>01/01/1945</birthdate>
+    <idPerson>111115</idPerson>
+    <lastname>Kortekaas</lastname>
+    <healthProfile/>
+    <name>Jose</name>
+  </person>
+  <person>
+    <birthdate>01/01/1945</birthdate>
+    <idPerson>111116</idPerson>
+    <lastname>Norris</lastname>
+    <healthProfile/>
+  </person>
+  <person>
+    <birthdate>01/01/1945</birthdate>
+    <idPerson>111117</idPerson>
+    <lastname>Norris</lastname>
+    <healthProfile/>
+  </person>
+  <person>
+    <birthdate>01/01/1945</birthdate>
+    <idPerson>111118</idPerson>
+    <lastname>Kortekaas</lastname>
+    <healthProfile/>
+    <name>Jose</name>
+  </person>
+  <person>
+    <idPerson>111119</idPerson>
+    <healthProfile/>
+    <name>Raiku</name>
+  </person>
 </people>
 
 Request #2: GET /person/1 Accept: application/xml
@@ -272,4 +310,51 @@ Request #3: PUT /person/1 Accept: application/xml Content-Type:  application/xml
   <name>Harrie</name>
   <username>rkortekaas</username>
 </person>
+
+Request #5: DELETE /person/4112 Accept: application/xml
+=> Result: OK
+=> HTTP Status: 500
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+
+Request #6: GET /measureTypes Accept: application/xml
+=> Result: OK
+=> HTTP Status: 200
+<?xml version="1.0" encoding="UTF-8"?><measureTypes>
+  <measureType>weight</measureType>
+  <measureType>height</measureType>
+  <measureType>steps</measureType>
+  <measureType>blood pressure</measureType>
+  <measureType>heart rate</measureType>
+  <measureType>bmi</measureType>
+</measureTypes>
+
+Request #8: GET /person/1/null/null Accept: application/xml
+=> Result: ERROR
+=> HTTP Status: 404
+<?xml version="1.0" encoding="UTF-8"?><measureTypes>
+  <measureType>weight</measureType>
+  <measureType>height</measureType>
+  <measureType>steps</measureType>
+  <measureType>blood pressure</measureType>
+  <measureType>heart rate</measureType>
+  <measureType>bmi</measureType>
+</measureTypes>
+
+Request #11: GET /person/1/weight?before=20-11-2016&after=10-11-1990 Accept: application/xml
+=> Result: ERROR
+=> HTTP Status: 500
+<?xml version="1.0" encoding="UTF-8"?><measureTypes>
+  <measureType>weight</measureType>
+  <measureType>height</measureType>
+  <measureType>steps</measureType>
+  <measureType>blood pressure</measureType>
+  <measureType>heart rate</measureType>
+  <measureType>bmi</measureType>
+</measureTypes>
+
+Request #12: GET /person?measureType=weight&max=95&min=85 Accept: application/xml
+=> Result: ERROR
+=> HTTP Status: 200
+<?xml version="1.0" encoding="UTF-8"?><people/>
 

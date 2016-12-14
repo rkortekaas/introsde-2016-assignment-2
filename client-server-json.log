@@ -104,14 +104,6 @@ Request #1: GET /person Accept: application/json
   "idPerson" : 4111,
   "measureType" : [ ]
 }, {
-  "lastname" : "Rambo",
-  "name" : "John",
-  "birthdate" : "01/01/2016",
-  "email" : null,
-  "username" : null,
-  "idPerson" : 4112,
-  "measureType" : [ ]
-}, {
   "lastname" : "Kenkah",
   "name" : "Testpersoon",
   "birthdate" : "01/01/2016",
@@ -209,6 +201,62 @@ Request #1: GET /person Accept: application/json
     },
     "measureName" : "height"
   } ]
+}, {
+  "lastname" : "Kortekaas",
+  "name" : "Jose",
+  "birthdate" : "01/01/1945",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 111113,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Kortekaas",
+  "name" : "Jose",
+  "birthdate" : "01/01/1945",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 111114,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Kortekaas",
+  "name" : "Jose",
+  "birthdate" : "01/01/1945",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 111115,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Norris",
+  "name" : null,
+  "birthdate" : "01/01/1945",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 111116,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Norris",
+  "name" : null,
+  "birthdate" : "01/01/1945",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 111117,
+  "measureType" : [ ]
+}, {
+  "lastname" : "Kortekaas",
+  "name" : "Jose",
+  "birthdate" : "01/01/1945",
+  "email" : null,
+  "username" : null,
+  "idPerson" : 111118,
+  "measureType" : [ ]
+}, {
+  "lastname" : null,
+  "name" : "Raiku",
+  "birthdate" : null,
+  "email" : null,
+  "username" : null,
+  "idPerson" : 111119,
+  "measureType" : [ ]
 } ]
 Request #2: GET /person/1 Accept: application/json
 => Result: OK
@@ -262,3 +310,19 @@ Request #3: PUT /person/1 Accept: application/json Content-Type:  application/js
     "measureName" : "height"
   } ]
 }
+Request #8: GET /person/1/null/null Accept: application/json
+=> Result: ERROR
+=> HTTP Status: 404
+null
+Request #8: GET /person/1/null/null Accept: application/json
+=> Result: ERROR
+=> HTTP Status: 404
+null
+Request #11: GET /person/1/weight?before=20-11-2016&after=10-11-1990 Accept: application/json
+=> Result: ERROR
+=> HTTP Status: 500
+null
+Request #12: GET /person?measureType=weight&max=95&min=85 Accept: application/json
+=> Result: ERROR
+=> HTTP Status: 200
+[ ]
