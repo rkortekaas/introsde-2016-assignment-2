@@ -120,8 +120,8 @@ public class ClientApp{
 		request3JSON();
 		printResult();		
 
-		request4XML();
-		printResult();
+		// request4XML();
+		// printResult();
 
 		// newperson_id = request4JSON();
 		// printResult();
