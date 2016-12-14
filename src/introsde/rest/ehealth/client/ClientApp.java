@@ -183,8 +183,8 @@ public class ClientApp{
 	}
 
 	private static URI getBaseURI(){ 
-		return UriBuilder.fromUri("http://192.168.0.100:5700/sdelab").build();
-//		return UriBuilder.fromUri("https://introsde2016-assignment-2.herokuapp.com/sdelab").build();
+		// return UriBuilder.fromUri("http://192.168.0.100:5700/sdelab").build();
+		return UriBuilder.fromUri("https://obscure-castle-30129.herokuapp.com/sdelab").build();
 	}
 	
 	

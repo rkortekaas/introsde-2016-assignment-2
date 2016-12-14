@@ -14,7 +14,7 @@ Local Deployment
 
 Heroku Deployment
 
-To access the heroku server please visit: ```https://murmuring-headland-68476.herokuapp.com/sdelab/person```
+To access the heroku server please visit: ```https://obscure-castle-30129.herokuapp.com/```
 
 ------------
 
